@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>AI Sensitivity Pro 🔥</title>
+
+<style>
+body{
+ margin:0;
+ font-family:sans-serif;
+ background:linear-gradient(135deg,#020617,#0f172a);
+ color:white;
+ text-align:center;
+}
+h1{ color:#22c55e; margin-top:20px;}
+.container{ padding:15px;}
+.card{
+ background:#0f172a;
+ margin:15px auto;
+ padding:20px;
+ border-radius:15px;
+ width:90%;
+ box-shadow:0 0 15px rgba(34,197,94,0.2);
+}
+input{
+ padding:12px;
+ width:85%;
+ border:none;
+ border-radius:8px;
+ margin-top:10px;
+}
+button{
+ padding:12px 25px;
+ background:#22c55e;
+ border:none;
+ border-radius:8px;
+ color:white;
+ margin-top:10px;
+ cursor:pointer;
+}
+.bar{
+ height:10px;
+ background:#22c55e;
+ margin:6px 0;
+ border-radius:5px;
+}
+#suggestions p{
+ cursor:pointer;
+ background:#1e293b;
+ margin:5px;
+ padding:5px;
+ border-radius:5px;
+}
+
+/* 🔥 AD STYLE */
+#adPopup{
+ position:fixed;
+ top:0;
+ left:0;
+ width:100%;
+ height:100%;
+ background:rgba(0,0,0,0.9);
+ display:none;
+ justify-content:center;
+ align-items:center;
+}
+#adBox{
+ background:#1e293b;
+ padding:25px;
+ border-radius:12px;
+}
+</style>
+</head>
+
+<body>
+
+<h1>🤖 AI Sensitivity Generator</h1>
+
+<div class="container">
+
+<div class="card">
+<h2>📱 Enter Phone Name</h2>
+<input id="phone" placeholder="e.g. realme c63, iphone 13">
+<div id="suggestions"></div>
+<br>
+
+<!-- ✅ FIXED BUTTON -->
+<button onclick="showAd()">Generate AI Settings</button>
+
+</div>
+
+<div class="card">
+<h2>📊 Result</h2>
+<div id="result"></div>
+</div>
+
+</div>
+
+<!-- 🔥 AD POPUP -->
+<div id="adPopup">
+<div id="adBox">
+<h2>💰 Loading Ad...</h2>
+<p>Please wait...</p>
+</div>
+</div>
+
+<script>
+
+// 🎯 RANDOMIZER
+function rand(v){
+return v + Math.floor(Math.random()*5 - 2);
+}
+
+// 🎯 SETTINGS
+function getSetting(type){
+let base;
+
+if(type==="low") base={g:100,r:95,x2:90,x4:80,awm:65,dpi:500,fire:65};
+if(type==="mid") base={g:90,r:85,x2:80,x4:70,awm:50,dpi:450,fire:60};
+if(type==="high") base={g:85,r:80,x2:75,x4:65,awm:45,dpi:400,fire:55};
+if(type==="ios") return {g:75,r:70,x2:65,x4:55,awm:45,dpi:"Default",fire:55};
+
+return {
+g: rand(base.g),
+r: rand(base.r),
+x2: rand(base.x2),
+x4: rand(base.x4),
+awm: rand(base.awm),
+dpi: base.dpi,
+fire: rand(base.fire)
+};
+}
+
+// 🤖 AI DETECT
+function detectType(name){
+name = name.toLowerCase();
+
+if(name.includes("iphone")) return "ios";
+
+if(name.includes("pro") || name.includes("plus") || name.includes("ultra") || name.includes("gt") || name.includes("neo") || name.includes("pixel")){
+return "high";
+}
+
+if(name.includes("c") || name.includes("a1") || name.includes("redmi 9") || name.includes("hot") || name.includes("spark")){
+return "low";
+}
+
+return "mid";
+}
+
+// 🔥 AD FUNCTION
+function showAd(){
+let name=document.getElementById("phone").value.trim();
+
+if(name===""){
+alert("Enter phone name first!");
+return;
+}
+
+document.getElementById("adPopup").style.display="flex";
+
+setTimeout(()=>{
+document.getElementById("adPopup").style.display="none";
+getData();
+},2000);
+}
+
+// 🔍 MAIN
+function getData(){
+let name=document.getElementById("phone").value.trim();
+
+let type = detectType(name);
+let data = getSetting(type);
+
+show(data, name.toUpperCase()+" ("+type.toUpperCase()+")");
+}
+
+// 📊 SHOW
+function show(d,title){
+document.getElementById("result").innerHTML=`
+<h3>${title}</h3>
+
+<h3>🎯 Sensitivity</h3>
+General: ${d.g}<div class="bar" style="width:${d.g}%"></div>
+Red Dot: ${d.r}<div class="bar" style="width:${d.r}%"></div>
+2x Scope: ${d.x2}<div class="bar" style="width:${d.x2}%"></div>
+4x Scope: ${d.x4}<div class="bar" style="width:${d.x4}%"></div>
+AWM: ${d.awm}<div class="bar" style="width:${d.awm}%"></div>
+
+<h3>⚙️ DPI</h3><p>${d.dpi}</p>
+<h3>🎮 Fire Button</h3><p>${d.fire}</p>
+`;
+}
+
+// 🔥 SUGGESTIONS
+let phones=["realme c63","realme narzo 50","redmi note 12","iphone 13","samsung a14","oneplus 11","iqoo neo 7","infinix hot 12"];
+
+document.getElementById("phone").addEventListener("input",function(){
+let val=this.value.toLowerCase();
+let html="";
+
+phones.filter(p=>p.includes(val)).forEach(p=>{
+html+=`<p onclick="selectPhone('${p}')">👉 ${p}</p>`;
+});
+
+document.getElementById("suggestions").innerHTML=html;
+});
+
+function selectPhone(name){
+document.getElementById("phone").value=name;
+document.getElementById("suggestions").innerHTML="";
+showAd(); // 🔥 click par ad bhi aayega
+}
+
+</script>
+
+</body>
+</html>
